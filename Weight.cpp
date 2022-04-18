@@ -134,8 +134,60 @@ bool Weight::isWeightValid(float checkWeight) const {
     if(checkWeight <= 0) {
         return false;
     }
-    if(bHasMax && checkWeight > maxWeight) {
+    if(bHasMax = true && checkWeight > maxWeight) {
         return false;
     }
     return true;
+}
+
+//Add to an existing weight.
+//It's assumed that rhs_addToWeight is in the same units as Weight.
+//out_of_range	When a mathematical operation is attempted when the weight is unknown
+Weight & Weight::operator+=(float rhs_addToWeight) {
+    if(weight == UNKNOWN_WEIGHT) {
+        throw std::out_of_range("Unknown weight");
+    }
+    weight = weight + rhs_addToWeight;
+}
+
+//Compare two Weights.
+//Remember to convert the two weight's units into a common unit!
+//Treat unknown weights as 0 (so we can sort them without dealing with exceptions)
+bool Weight::operator<(const Weight &rhs_Weight) const {
+    float rhsWeightInPounds = 0;
+    float lhsWeightInPounds = 0;
+
+    if(rhs_Weight.getWeight() != UNKNOWN_WEIGHT) {
+        rhsWeightInPounds = Weight::convertWeight(rhs_Weight.weight, rhs_Weight.unitOfWeight, POUND);
+    }
+
+    if(getWeight() != UNKNOWN_WEIGHT) {
+        lhsWeightInPounds = Weight::convertWeight(weight, unitOfWeight, POUND);
+    }
+
+    if(lhsWeightInPounds<rhsWeightInPounds) {
+        return true;
+    }
+    return false;
+}
+
+//Weights are equal when their weights are equal.
+//Remember to convert the two weight's units into a common unit!
+// Treat unknown weights as 0 (so we can sort them without dealing with exceptions)
+bool Weight::operator==(const Weight &rhs_Weight) const {
+    float rhsWeightInPounds = 0;
+    float lhsWeightInPounds = 0;
+
+    if(rhs_Weight.getWeight() != UNKNOWN_WEIGHT) {
+        rhsWeightInPounds = Weight::convertWeight(rhs_Weight.weight, rhs_Weight.unitOfWeight, POUND);
+    }
+
+    if(getWeight() != UNKNOWN_WEIGHT) {
+        lhsWeightInPounds = Weight::convertWeight(weight, unitOfWeight, POUND);
+    }
+
+    if(lhsWeightInPounds==rhsWeightInPounds) {
+        return true;
+    }
+    return false;
 }
