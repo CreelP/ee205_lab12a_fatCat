@@ -18,20 +18,20 @@
 
 const float UNKNOWN_WEIGHT = -1;
 const float Weight::KILOS_IN_A_POUND = 0.453592;
-const float SLUGS_IN_A_POUND = 0.031081;
-const string Weight::POUND_LABEL = "Pound";
-const string Weight::KILO_LABEL = "Kilo";
-const string Weight::SLUG_LABEL = "Slug";
+static const float SLUGS_IN_A_POUND = 0.031081;
+static const string Weight::POUND_LABEL = "Pound";
+static const string Weight::KILO_LABEL = "Kilo";
+static const string Weight::SLUG_LABEL = "Slug";
 
 Weight::Weight() noexcept {
     unitOfWeight = POUND;
-    weight = UKNOWN_WEIGHT;
+    weight = UNKNOWN_WEIGHT;
     maxWeight = UNKNOWN_WEIGHT;
 }
 
 Weight::Weight(float newWeight) {
     unitOfWeight = POUND;
-    weight = UKNOWN_WEIGHT;
+    weight = UNKNOWN_WEIGHT;
     maxWeight = UNKNOWN_WEIGHT;
     bIsKnown = true;
     if(isWeightValid(newWeight) == false) {
@@ -41,13 +41,13 @@ Weight::Weight(float newWeight) {
 
 Weight::Weight(const Weight::UnitOfWeight newUnitOfWeight) noexcept {
     unitOfWeight = POUND;
-    weight = UKNOWN_WEIGHT;
+    weight = UNKNOWN_WEIGHT;
     maxWeight = UNKNOWN_WEIGHT;
 }
 
 Weight::Weight(float newWeight, const Weight::UnitOfWeight newUnitOfWeight) {
     unitOfWeight = POUND;
-    weight = UKNOWN_WEIGHT;
+    weight = UNKNOWN_WEIGHT;
     bIsKnown = true;
     if(isWeightValid(newWeight) == false) {
         throw std::out_of_range("Weight cannot be <= 0.");
@@ -56,7 +56,7 @@ Weight::Weight(float newWeight, const Weight::UnitOfWeight newUnitOfWeight) {
 
 Weight::Weight(float newWeight, float newMaxWeight) {
     unitOfWeight = POUND;
-    weight = UKNOWN_WEIGHT;
+    weight = UNKNOWN_WEIGHT;
     maxWeight = newMaxWeight;
     bIsKnown = true;
     if(isWeightValid(newWeight) == false) {
@@ -69,7 +69,7 @@ Weight::Weight(float newWeight, float newMaxWeight) {
 
 Weight::Weight(const Weight::UnitOfWeight newUnitOfWeight, float newMaxWeight) {
     unitOfWeight = POUND;
-    weight = UKNOWN_WEIGHT;
+    weight = UNKNOWN_WEIGHT;
     maxWeight = newMaxWeight;
     bHasMax = true;
     if(newMaxWeight <= 0) {
@@ -79,7 +79,7 @@ Weight::Weight(const Weight::UnitOfWeight newUnitOfWeight, float newMaxWeight) {
 
 Weight::Weight(float newWeight, const Weight::UnitOfWeight newUnitOfWeight, float newMaxWeight) {
     unitOfWeight = POUND;
-    weight = UKNOWN_WEIGHT;
+    weight = UNKNOWN_WEIGHT;
     maxWeight = newMaxWeight;
     bIsKnown = true;
     bHasMax = true;
@@ -91,7 +91,7 @@ Weight::Weight(float newWeight, const Weight::UnitOfWeight newUnitOfWeight, floa
     }
 }
 
-void Weight::dump()	const {
+void Weight::dump()	const noexcept{
     using namespace std;
 
 #define FORMAT_LINE(className, member) cout << setw(8) << (className) << setw(20) << (member) << setw(52)
@@ -101,17 +101,17 @@ void Weight::dump()	const {
     cout << left ;
     cout << boolalpha ;
     FORMAT_LINE( "Weight", "this" ) << this << endl ;
-    FORMAT_LINE( "Weight", "isKnown" ) << blsKnown << endl ;
+    FORMAT_LINE( "Weight", "isKnown" ) << bIsKnown << endl ;
     FORMAT_LINE( "Weight", "weight" ) << getWeight() << endl ;
     FORMAT_LINE( "Weight", "unitOfWeight" ) << unitOfWeight << endl ;
     FORMAT_LINE( "Weight", "hasMax" ) << bHasMax << endl ;
     FORMAT_LINE( "Weight", "maxWeight" ) << maxWeight << endl;
-    return true ;
+
 
 }
 // Get max weight.
 // If weight is not known, return UNKNOWN_WEIGHT
-float Weight::getMaxWeight() const {
+float Weight::getMaxWeight() const noexcept{
     if(newMaxWeight()) {
         return weight;
     }
@@ -120,7 +120,7 @@ float Weight::getMaxWeight() const {
 
 // Get the weight in the Weight's units.
 //If the weight is not known, return UNKNOWN_WEIGHT.
-float Weight::getWeight()const {
+float Weight::getWeight()const noexcept{
     if(isWeightKnown()){
         return weight;
     }
@@ -130,11 +130,11 @@ float Weight::getWeight()const {
 //Check the weight.
 //Verify that checkWeight > 0
 //If bHasMax, then checkWeight must be <= maxWeight
-bool Weight::isWeightValid(float checkWeight) const {
+bool Weight::isWeightValid(float checkWeight) const noexcept{
     if(checkWeight <= 0) {
         return false;
     }
-    if(bHasMax = true && checkWeight > maxWeight) {
+    if(bHasMax && checkWeight > maxWeight) {
         return false;
     }
     return true;
@@ -211,9 +211,9 @@ void Weight::setWeight(float newWeight) {
     if(isWeightValid(newWeight)){
         throw std::out_of_range("Weight is <=0 or > maxWeight.");
     }
-    if(blsKnown == false){
+    if(bIsKnown == false){
         weight = newWeight;
-        blsKnown = true;
+        bIsKnown = true;
     }
 }
 

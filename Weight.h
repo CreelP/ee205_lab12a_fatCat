@@ -11,6 +11,7 @@
 #ifndef EE205_LAB12A_FATCAT_WEIGHT_H
 #define EE205_LAB12A_FATCAT_WEIGHT_H
 
+
 class Weight {
 
 public:
