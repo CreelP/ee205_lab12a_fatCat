@@ -70,3 +70,4 @@ Weight::Weight(float newWeight, float newMaxWeight) {
 Weight::Weight(UnitOfWeight newUnitOfWeight, float newMaxWeight) {
 
 }
+
