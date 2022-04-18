@@ -68,6 +68,26 @@ Weight::Weight(float newWeight, float newMaxWeight) {
 }
 
 Weight::Weight(UnitOfWeight newUnitOfWeight, float newMaxWeight) {
+    unitOfWeight = POUND;
+    weight = UKNOWN_WEIGHT;
+    maxWeight = newMaxWeight;
+    bHasMax = true;
+    if(newMaxWeight <= 0) {
+        throw std::out_of_range("New weight cannot be <= 0.");
+    }
+}
 
+Weight::Weight(float newWeight, const Weight::UnitOfWeight newUnitOfWeight, float newMaxWeight) {
+    unitOfWeight = POUND;
+    weight = UKNOWN_WEIGHT;
+    maxWeight = newMaxWeight;
+    bIsKnown = true;
+    bHasMax = true;
+    if(isWeightValid(newWeight) == false) {
+        throw std::out_of_range("Weight cannot be <= 0.");
+    }
+    if(newMaxWeight <= 0) {
+        throw std::out_of_range("New weight cannot be <= 0.");
+    }
 }
 
