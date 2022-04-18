@@ -191,3 +191,29 @@ bool Weight::operator==(const Weight &rhs_Weight) const {
     }
     return false;
 }
+
+//Set the maximum weight.
+//The maximum weight should not be set when we start this routine
+//out_of_range	When the maximum weight is <= 0
+void Weight::setMaxWeight(float newMaxWeight) {
+    if(newMaxWeight <= 0) {
+        throw std::out_of_range("Max weight is <= 0.");
+    }
+    if (bHasMax == false) {
+        maxWeight = newMaxWeight;
+        bHasMax = true;
+    }
+}
+
+//Set the weight
+//out_of_range	When the weight is <=0 or > maxWeight (if maxWeight is set)
+void Weight::setWeight(float newWeight) {
+    if(isWeightValid(newWeight)){
+        throw std::out_of_range("Weight is <=0 or > maxWeight.");
+    }
+    if(blsKnown == false){
+        weight = newWeight;
+        blsKnown = true;
+    }
+}
+
