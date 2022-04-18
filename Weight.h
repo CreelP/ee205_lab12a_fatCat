@@ -45,7 +45,6 @@ public:
     void dump() const noexcept;
     bool operator==(const Weight &rhs_Weight);
     bool operator<(const Weight &rhs_Weight) const;
-
     Weight & operator+=(float rhs_addToWeight);
 
     static float fromKilogramToPound(float kilogram) noexcept;
@@ -53,16 +52,16 @@ public:
     static float fromSlugToPound(float slug) noexcept;
     static float fromPoundToSlug(float pound) noexcept;
     static float convertWeight(float fromWeight, UnitOfWeight fromUnit, UnitOfWeight toUnit) noexcept;
-    void setMaxWeight(float newMaxWeight);
 
 
 private:
-    bool bIsKnown;
-    bool bHasMax;
-    enum UnitOfWeight unitOfWeight;
-    float weight;
-    float maxWeight;
+    bool bIsKnown = false;
+    bool bHasMax = false;
+    enum UnitOfWeight unitOfWeight = POUND;
+    float weight {};
+    float maxWeight {};
 
+    void setMaxWeight(float newMaxWeight);
 };
 
 
