@@ -217,3 +217,24 @@ void Weight::setWeight(float newWeight) {
     }
 }
 
+
+float Weight::fromKilogramToPound( const float kilogram ) noexcept {
+    return kilogram / KILOS_IN_A_POUND ;
+}
+
+float Weight::fromPoundToKilogram(float pound) noexcept {
+    return pound*KILOS_IN_A_POUND;
+}
+
+float Weight::fromPoundToSlug(float pound) noexcept {
+    return pound*SLUGS_IN_A_POUND;
+}
+
+float Weight::fromSlugToPound(float slug) noexcept {
+    return slug/SLUGS_IN_A_POUND;
+}
+
+static float convertWeight(float fromWeight, UnitOfWeight fromUnit, UnitOfWeight toUnit) noexcept {
+    return fromWeight, fromUnit, toUnit;
+}
+
