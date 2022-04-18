@@ -29,7 +29,7 @@ Weight::Weight() noexcept {
     maxWeight = UNKNOWN_WEIGHT;
 }
 
-Weight::Weight(float newWeight){
+Weight::Weight(float newWeight) {
     unitOfWeight = POUND;
     weight = UKNOWN_WEIGHT;
     maxWeight = UNKNOWN_WEIGHT;
