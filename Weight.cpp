@@ -51,6 +51,7 @@ Weight::Weight(float newWeight, const Weight::UnitOfWeight newUnitOfWeight) {
     bIsKnown = true;
     if(isWeightValid(newWeight) == false) {
         throw std::out_of_range("Weight cannot be <= 0.");
+    }
 }
 
 Weight::Weight(float newWeight, float newMaxWeight) {
