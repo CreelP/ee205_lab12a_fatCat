@@ -131,10 +131,10 @@ float Weight::getWeight()const {
 //Verify that checkWeight > 0
 //If bHasMax, then checkWeight must be <= maxWeight
 bool Weight::isWeightValid(float checkWeight) const {
-    if(checkWeight <= 0){
+    if(checkWeight <= 0) {
         return false;
     }
-    if(bHasMax && checkWeight > maxWeight){
+    if(bHasMax && checkWeight > maxWeight) {
         return false;
     }
     return true;
