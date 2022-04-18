@@ -67,7 +67,7 @@ Weight::Weight(float newWeight, float newMaxWeight) {
     }
 }
 
-Weight::Weight(UnitOfWeight newUnitOfWeight, float newMaxWeight) {
+Weight::Weight(const Weight::UnitOfWeight newUnitOfWeight, float newMaxWeight) {
     unitOfWeight = POUND;
     weight = UKNOWN_WEIGHT;
     maxWeight = newMaxWeight;
@@ -91,3 +91,51 @@ Weight::Weight(float newWeight, const Weight::UnitOfWeight newUnitOfWeight, floa
     }
 }
 
+void Weight::dump()	const {
+    using namespace std;
+
+#define FORMAT_LINE(className, member) cout << setw(8) << (className) << setw(20) << (member) << setw(52)
+    assert( validate() ) ;
+    cout << setw(80) << setfill( '=' ) << "" << endl ;
+    cout << setfill( ' ' ) ;
+    cout << left ;
+    cout << boolalpha ;
+    FORMAT_LINE( "Weight", "this" ) << this << endl ;
+    FORMAT_LINE( "Weight", "isKnown" ) << blsKnown << endl ;
+    FORMAT_LINE( "Weight", "weight" ) << getWeight() << endl ;
+    FORMAT_LINE( "Weight", "unitOfWeight" ) << unitOfWeight << endl ;
+    FORMAT_LINE( "Weight", "hasMax" ) << bHasMax << endl ;
+    FORMAT_LINE( "Weight", "maxWeight" ) << maxWeight << endl;
+    return true ;
+
+}
+// Get max weight.
+// If weight is not known, return UNKNOWN_WEIGHT
+float Weight::getMaxWeight() const {
+    if(newMaxWeight()) {
+        return weight;
+    }
+    return UNKNOWN_WEIGHT;
+}
+
+// Get the weight in the Weight's units.
+//If the weight is not known, return UNKNOWN_WEIGHT.
+float Weight::getWeight()const {
+    if(isWeightKnown()){
+        return weight;
+    }
+    return UNKNOWN_WEIGHT;
+}
+
+//Check the weight.
+//Verify that checkWeight > 0
+//If bHasMax, then checkWeight must be <= maxWeight
+bool Weight::isWeightValid(float checkWeight) const {
+    if(checkWeight <= 0){
+        return false;
+    }
+    if(bHasMax && checkWeight > maxWeight){
+        return false;
+    }
+    return true;
+}
